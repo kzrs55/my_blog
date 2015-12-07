@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="body-wrap">
+    {% for post in post_list %}
+        <article id ="{{ post.id }}"  class="article article-type-post show" itemscope itemprop="blogpost">
+        <div class="article-meta">
+            <a href="/" class="article-date">
+                <time datetime="{{ post.date_time }}" itemscope="datepublished">{{ post.date_time }}</time>
+            </a>
+        </div>
+        <div class="article-inner">
+            <input type="hidden" class="isFancy">
+            <header class="article-header">
+                <h1 itemscope="name">
+                    <a class="article-title" href="/">{{ post.title }}</a>
+                </h1>
+            </header>
+            <div class="article-entry" itemprop="articleBody">
+                {{ post.content }}
+            </div>
+            <div class="article-info article-info-index">
+                <div class="article-tag tagcloud">
+                    <ul class="article-tag-list">
+                        <li class="article-tag-list-item">
+                            <a class="color5" href="#" style="font-size: 12px;">
+                                {{ post.category }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <p class="article-more-link">
+                    <a href="#">more>></a>
+                </p>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        </article>
+    {% endfor %}
+</div><!-- /.blog-post -->
+{% endblock %}
