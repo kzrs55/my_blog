@@ -1,24 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="body-wrap">
-<article id="post-instagram" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        <input type="hidden" class="isFancy">
-        <header class="article-header">
-            <h1 class="article-title" itemprop="name">相册</h1>
-        </header>
-        <div class="article-info article-info-post">
-            <div class="clearfix"></div>
-        </div>
-        <div class="article-entry" itemprop="articleBody">
-            <div class="instagram" >
-
+    <div class="body-wrap">
+        <article id="post-instagram" class="article article-type-post" itemscope itemprop="blogPost">
+            <div class="article-inner">
+                <input type="hidden" class="isFancy">
+                <header class="article-header">
+                    <h1 class="article-title" itemprop="name">相册</h1>
+                </header>
+                <div class="article-info article-info-post">
+                    <div class="clearfix"></div>
+                </div>
+                <div class="article-entry" itemprop="articleBody">
+                    <div class="instagram">
+                        {% for post in post_list %}
+                            <section class="archives album">
+                                {% ifchanged post.photo_time.month %}
+                                    <h1 class="year">
+                                        {{ post.photo_time.year }}
+                                        <em>{{ post.photo_time.day }}月</em>
+                                    </h1>
+                                    <ul class="img-box-ul">
+                                {% endifchanged %}
+                                <li>
+                                    <div class="img-box">
+                                        <a class="img-bg" rel="example_group" href="{{ post.path }}"
+                                           title="{{ post.title }}"></a>
+                                        <img src="{{ post.path }}" style="display: inline">
+                                    </div>
+                                </li>
+                                {% ifchanged post.photo_time.month %}
+                                    </ul>
+                                {% endifchanged %}
+                            </section>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-        </div>
+        </article>
     </div>
-</article>
-</div>
 
 
 {% endblock %}

@@ -1,41 +1,53 @@
 {% extends "base.html" %}
-
+{% load custom_markdown %}
 {% block content %}
-<div class="body-wrap">
-    {% for post in post_list %}
-        <article id ="{{ post.id }}"  class="article article-type-post show" itemscope itemprop="blogpost">
-        <div class="article-meta">
-            <a href="/" class="article-date">
-                <time datetime="{{ post.date_time }}" itemscope="datepublished">{{ post.date_time }}</time>
-            </a>
-        </div>
-        <div class="article-inner">
-            <input type="hidden" class="isFancy">
-            <header class="article-header">
-                <h1 itemscope="name">
-                    <a class="article-title" href="/">{{ post.title }}</a>
-                </h1>
-            </header>
-            <div class="article-entry" itemprop="articleBody">
-                {{ post.content }}
+    <div class="body-wrap">
+        {% for post in post_list %}
+            <article id="{{ post.id }}" class="article article-type-post show" itemscope itemprop="blogpost">
+            <div class="article-meta">
+                <a href="/" class="article-date">
+                    <time datetime="{{ post.date_time }}" itemscope="datepublished">{{ post.date_time|date:"M/d" }}</time>
+                </a>
             </div>
-            <div class="article-info article-info-index">
-                <div class="article-tag tagcloud">
-                    <ul class="article-tag-list">
-                        <li class="article-tag-list-item">
-                            <a class="color5" href="#" style="font-size: 12px;">
-                                {{ post.category }}
-                            </a>
-                        </li>
-                    </ul>
+            <div class="article-inner">
+                <input type="hidden" class="isFancy">
+                <header class="article-header">
+                    <h1 itemscope="name">
+                        <a class="article-title" href="/">{{ post.title }}</a>
+                    </h1>
+                </header>
+                <div class="article-entry" itemprop="articleBody">
+                    {{ post.content|custom_markdown|slice:"250" }}
                 </div>
-                <p class="article-more-link">
-                    <a href="#">more>></a>
-                </p>
-                <div class="clearfix"></div>
+                <div class="article-info article-info-index">
+                    <div class="article-tag tagcloud">
+                        <ul class="article-tag-list">
+                            <li class="article-tag-list-item">
+                                <a class="color5" href="/tag{{ post.category }}" style="font-size: 12px;">
+                                    {{ post.category }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="article-more-link">
+                        <a href="{{ post.date_time |date:"Y/m/d/" }}{{ post.title }}">more>></a>
+                    </p>
+                    <div class="clearfix"></div>
+                </div>
             </div>
-        </div>
         </article>
-    {% endfor %}
-</div><!-- /.blog-post -->
+      {% endfor %}
+        <nav id="page-nav">
+            {% if post_list.object_list and post_list.paginator.num_pages > 1 %}
+                {% if post_list.has_previous %}
+                    <a class="extend prev" rel="prev" href="?page={{ post_list.previous_page_number }}"><< Prev</a>
+                {% endif %}
+                {% if post_list.has_next %}
+                    <a class="extend next" rel="next" href="?page={{ post_list.next_page_number }}">Next >></a>
+                {% endif %}
+            {% endif %}
+
+        </nav>
+
+    </div><!-- /.blog-post -->
 {% endblock %}

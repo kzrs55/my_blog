@@ -29,6 +29,7 @@ class Photo(models.Model):
     url = models.CharField(max_length=255, default='', null=True, blank=True)
     path = models.ImageField(upload_to='upload/images/', null=True, blank=True)
     title = models.CharField(max_length=100, null=True, blank=True)
+    photo_time=models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.title or self.path.name
 
@@ -38,6 +39,10 @@ class Photo(models.Model):
         self.published = 1
         self.sync_status = 1
         super(Photo, self).save()
+
+    class Meta:
+        ordering=['-photo_time']
+
 
 
 class Comment(models.Model):

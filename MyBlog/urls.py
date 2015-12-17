@@ -20,5 +20,9 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$','Blog.views.home',name='home'),
     url(r'^archives','Blog.views.archives',name='archives'),
+    url(r'^(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/(?P<day>[0-9]{2})/(?P<title>\w+)','Blog.views.detail',name='detail'),
+    url(r'^tag(?P<tag>\w+)/$','Blog.views.tag',name='tag'),
+    url(r'^photos','Blog.views.photos',name='photos'),
+    url(r'^upload/images/(?P<path>.*)','django.views.static.serve',{'document_root':'./upload/images'}),
 
 ]

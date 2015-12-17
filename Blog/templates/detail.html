@@ -1,10 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load custom_markdown %}
+{% block content %}
+    <div class="body-wrap">
+        <article id="post-hack-in-localstorage" class="article article-type-post" itemscope itemprop="blogPost">
+            <div class="article-meta">
+                <a href="#" class="article-date">
+                    <time datetime="{{ post.date_time |date:"Y/m/d/" }}"
+                          itemprop="datePublished">{{ post.date_time |date:"M/d" }}</time>
+                </a>
+            </div>
 
-</body>
-</html>
+            <div class="article-inner">
+                {#                    <input type="hidden" class="isFancy"/>#}
+                <header class="article-header">
+                    <h1 class="article-title" itemprop="name">
+                        {{ post.title }}
+                    </h1>
+                </header>
+
+                <div class="article-info article-info-post">
+                    <div class="article-tag tagcloud">
+                        <ul class="article-tag-list">
+                            <li class="article-tag-list-item">
+                                <a class="article-tag-list-link"
+                                   href="/tag{{ post.category }}">{{ post.category }}</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="article-entry" itemprop="articleBody">
+                    {{ post.content|custom_markdown }}
+                </div>
+            </div>
+            <nav id="article-nav">
+                <a href="{{ post.date_time |date:"Y/m/d/" }}{{ post.title }}" id="article-nav-older"
+                   class="article-nav-link-wrap">
+                    <div class="article-nav-title">{{ post.title }}</div>
+                    <strong class="article-nav-caption">></strong>
+                </a>
+
+            </nav>
+        </article>
+        {% include "duoshuo.html" %}
+    </div>
+
+{% endblock %}
